@@ -96,6 +96,10 @@
         .hidden {
             display: none;
         }
+
+        .inbox-card {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body class="light-mode">
@@ -182,6 +186,14 @@
                     <button class="btn btn-primary" onclick="submitApplication()">Submit Application</button>
                 </div>
             </div>
+
+            <!-- Inbox Section -->
+            <div class="inbox-card card p-4 shadow-sm mx-auto" style="max-width: 600px;">
+                <h5 class="mb-3">Feedback from Interviewers</h5>
+                <ul id="feedback-list" class="list-group">
+                    <!-- Feedback entries will be dynamically inserted here -->
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -189,6 +201,13 @@
         const users = [
             { username: "interviewer1", password: "pass123", role: "interviewer" },
             { username: "interviewee1", password: "pass456", role: "interviewee" }
+        ];
+
+        const feedbackData = [
+            { company: "Tech Innovators", feedback: "Great communication skills, but we need someone with more technical expertise." },
+            { company: "Future Enterprises", feedback: "We were impressed with your enthusiasm, but the role requires more hands-on experience." },
+            { company: "Creative Solutions", feedback: "Strong problem-solving abilities, but you need to improve your time management." },
+            { company: "Global Tech", feedback: "You have a solid foundation, but we were looking for someone with more leadership experience." }
         ];
 
         let currentUser = null;
@@ -212,6 +231,7 @@
                     document.getElementById("interviewer-section").classList.remove("hidden");
                 } else if (user.role === "interviewee") {
                     document.getElementById("interviewee-section").classList.remove("hidden");
+                    displayFeedback();
                 }
             } else {
                 alert("Invalid username or password.");
@@ -251,6 +271,16 @@
         function displayReason() {
             const messageLabel = document.getElementById("message-label");
             messageLabel.innerHTML = "Thank you for your feedback!";
+        }
+
+        function displayFeedback() {
+            const feedbackList = document.getElementById("feedback-list");
+            feedbackData.forEach(entry => {
+                const li = document.createElement("li");
+                li.classList.add("list-group-item");
+                li.innerHTML = `<strong>${entry.company}</strong>: ${entry.feedback}`;
+                feedbackList.appendChild(li);
+            });
         }
     </script>
 
